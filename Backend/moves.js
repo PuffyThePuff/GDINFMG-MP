@@ -1,5 +1,5 @@
 let moves = {
-    moveId: null,
+    moveID: null,
     type: null,
     damage: null,
     guard: null,
