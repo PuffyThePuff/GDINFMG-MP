@@ -72,6 +72,7 @@ function InsertMovesToDB(move){
     pool.query('INSERT IGNORE INTO moves VALUES("??", ?, "??", ?, "??", ?, ?, "??");', 
     [///Move Data
     move.moveID, 
+    move.notation, 
     move.damage, 
     move.guard, 
     move.startup, 
@@ -89,13 +90,10 @@ function (err, result) {
 
 ////Sample Data Adding
 
-///Sample Character Data, is not actual data from the game
-    // CharacterData.name = "Ramlethal";
-    // InsertCharacterToDB(CharacterData);
-
 
 ///Sample Move Data, is not actual data from game
-    // movesData.moveID = 'Ram5P';
+    // movesData.moveID = '5P';
+    // movesData.notation = '5P';
     // movesData.damage = 10;
     // movesData.guard = 'All';
     // movesData.startup = 10;
@@ -104,6 +102,17 @@ function (err, result) {
     // movesData.on_block =  0;
     // movesData.invuln = null;
     // InsertMovesToDB(movesData);
+
+function sendPunishList(){
+    pool.query('SELECT * FROM moves WHERE', function (err, results, fields){
+        if (err){
+            console.log("query failed");
+            console.error(err);
+            return;
+        }
+        
+    })
+};
 
 app.get("/", (req, res) => {
     res.send("test get");
