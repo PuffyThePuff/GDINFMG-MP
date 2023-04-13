@@ -24,5 +24,5 @@ ROW("call 4B3", "236S", "9x5", "All", 15, 18, 24, null, null),
 ROW("call 4B3", "j.236S", null, "All", 21, 18, 0, null, null),
 ROW("13C !S", "13C !S", "10x9", "All", null, null, null, null, null),
 ROW("call 13C", "632146S", null, null, 4, (Flash), 10, null, null),
-ROW("call 4CC", "632146H", 158, "All", "9+4", 3, 70, -39, null),
+ROW("call 4CC", "632146H", 158, "All", "9+4", 3, 70, -39, null)
 );

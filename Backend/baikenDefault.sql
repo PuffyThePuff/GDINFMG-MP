@@ -1,6 +1,6 @@
 use guilty_gear;
 
-DELETE FROM anji;
+DELETE FROM baiken;
 
 INSERT INTO baiken (moveID, notation, damage, guard, startup, active, recovery, on_block, invuln)
 VALUES(
