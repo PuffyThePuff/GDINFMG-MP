@@ -2,35 +2,288 @@ DROP DATABASE IF EXISTS guilty_gear;
 CREATE DATABASE IF NOT EXISTS guilty_gear;
 use guilty_gear;
 
-CREATE TABLE characters (
-	name varchar(20) not null unique,
-    defense int,
-    guts int,
-    prejump int,
-    weight varchar(30),
-    backdash varchar(50),
-    forward_dash int,
-    unique_movement varchar(30),
-    RISC_multiplier float,
-    Movement_Tension_Gain int,
-    constraint PK_character_name PRIMARY KEY (name)
-);
-
-CREATE TABLE moves(
-	type enum('normal', 'special', 'overdrive'),
+CREATE TABLE anji(
 	moveID varchar(20)/*name*/,
+    notation varchar(20),
     damage int,
     guard varchar(10),
     startup int, 
     active varchar(10),
     recovery int,
-    on_block int, 
-    on_hit varchar(5),
-    level int,
-    counter_type varchar(15),
+    on_block int,
     invuln varchar(30),
-    proration float,
-    RISC_Gain varchar(10),
-    RISC_Loss varchar(10),
     constraint PK_moveID PRIMARY KEY (moveID)
-)
+);
+
+CREATE TABLE axl(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE baiken(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE bridget(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE chipp(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE faust(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE giovanna(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE goldlewis(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE happy(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE ino(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE jacko(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE ky(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE leo(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE may(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE millia(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE nagoriyuki(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE potemkin(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE ramlethal(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE sin(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE sol(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE testament(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);
+
+CREATE TABLE zato1(
+	moveID varchar(20)/*name*/,
+    notation varchar(20),
+    damage int,
+    guard varchar(10),
+    startup int, 
+    active varchar(10),
+    recovery int,
+    on_block int,
+    invuln varchar(30),
+    constraint PK_moveID PRIMARY KEY (moveID)
+);

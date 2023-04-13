@@ -1,5 +1,6 @@
 let moves = {
     moveID: null,
+    notation: null,
     type: null,
     damage: null,
     guard: null,
@@ -7,13 +8,7 @@ let moves = {
     active: null,
     recovery: null,
     on_block: null,
-    on_hit: null,
-    level: null,
-    counter_type: null,
-    invuln: null,
-    proration: null,
-    risc_gain: null,
-    risc_loss: null,
+    invuln: null
 }
 
 module.exports = {
