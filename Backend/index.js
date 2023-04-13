@@ -7,13 +7,6 @@ const { movesData } = require("./moves");
 
 require("dotenv").config();
 
-// const connection = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "puffythepuff",
-//     database: "world"
-// });
-
 const pool = mysql.createPool({
     host: process.env.SQL_HOST,
     user: "root",
@@ -42,31 +35,31 @@ const pool = mysql.createPool({
 
 const app = express();
 
-const tableName = ["characters", "moves"];
-pool.query("SELECT * FROM characters;",  function (err, results, fields){
-        if (err){
-            console.log("query failed");
-            console.error(err);
-            return;
-        }
-        console.log(results);
-});
+// const tableName = ["characters", "moves"];
+// pool.query("SELECT * FROM characters;",  function (err, results, fields){
+//         if (err){
+//             console.log("query failed");
+//             console.error(err);
+//             return;
+//         }
+//         console.log(results);
+// });
 
     
-function InsertCharacterToDB(character){
-    ///Works but has an extra `` on strings e.g `Ramlethal` instead of Ramlethal
-    ///There could be a more efficient way
-    pool.query('INSERT IGNORE INTO characters VALUES ("??");', 
-    [///Character data
-        character.name
-    ],
-        function (err, result) {
-            if (err) throw err;
-            console.log(character.name, " has been placed to the Database");
-            console.log(character);
-        }
-    );
-};
+// function InsertCharacterToDB(character){
+//     ///Works but has an extra `` on strings e.g `Ramlethal` instead of Ramlethal
+//     ///There could be a more efficient way
+//     pool.query('INSERT IGNORE INTO characters VALUES ("??");', 
+//     [///Character data
+//         character.name
+//     ],
+//         function (err, result) {
+//             if (err) throw err;
+//             console.log(character.name, " has been placed to the Database");
+//             console.log(character);
+//         }
+//     );
+// };
         
 function InsertMovesToDB(move){
     pool.query('INSERT IGNORE INTO moves VALUES("??", ?, "??", ?, "??", ?, ?, "??");', 
@@ -103,19 +96,22 @@ function (err, result) {
     // movesData.invuln = null;
     // InsertMovesToDB(movesData);
 
-function sendPunishList(){
-    pool.query('SELECT * FROM moves WHERE', function (err, results, fields){
+function sendPunishList(character, startup){
+    pool.query('SELECT moveId, notation FROM ?? WHERE startup <= ?', [character, startup], function (err, results, fields){
         if (err){
             console.log("query failed");
             console.error(err);
             return;
         }
-        
+        console.log(results);
+        return results;
     })
 };
 
-app.get("/", (req, res) => {
-    res.send("test get");
+// sendPunishList('anji', 10);
+
+app.get("/punish", (req, res) => {
+    res.send(sendPunishList(req.params.character, req.params.startup));
 });
 
 app.listen(process.env.PORT, function(){
