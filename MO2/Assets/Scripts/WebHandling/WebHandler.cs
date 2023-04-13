@@ -58,6 +58,73 @@ public class WebHandler : MonoBehaviour
         //ResetPlayerScores(secret);
     }
 
+    public void CreateMoveData()
+    {
+
+    }
+
+    public void CreatePunishList()
+    {
+
+    }
+
+    public void SearchMoveData()
+    {
+
+    }
+
+    public void SearchFastestMove(string characterName)
+    {
+
+    }
+
+    public void UpdateMoveData(string characterName, string moveName)
+    {
+
+    }
+
+    public void DeleteMoveData(string characterName, string moveName)
+    {
+
+    }
+
+    IEnumerator DeleteMoveDataRequest(string characterName, string moveName)
+    {
+        Dictionary<string, object> deleteScoresParams = new Dictionary<string, object>();
+
+        deleteScoresParams.Add("characterName", characterName);
+        deleteScoresParams.Add("moveID", moveName);
+
+        //turns the dictionary into a JSON string
+        string requestString = JsonConvert.SerializeObject(deleteScoresParams);
+        //convert string into bytes
+        byte[] requestData = Encoding.UTF8.GetBytes(requestString);
+
+        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "scores", "DELETE"))
+        {
+            //send what data type is in the request
+            request.SetRequestHeader("Content-Type", "application/JSON");
+            //add request data
+            request.uploadHandler = new UploadHandlerRaw(requestData);
+            //create reciever for response
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            yield return request.SendWebRequest();
+
+            Debug.Log($"response code: {request.responseCode}");
+
+            //check if no error
+            if (string.IsNullOrEmpty(request.error))
+            {
+                Debug.Log($"message: {request.downloadHandler.text}");
+            }
+            else
+            {
+                Debug.Log($"error: {request.error}");
+            }
+        }
+    }
+
     #region Group creation
     public void CreateGroup()
     {
