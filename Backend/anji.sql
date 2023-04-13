@@ -1,0 +1,1 @@
+SELECT * FROM guilty_gear.anji;
