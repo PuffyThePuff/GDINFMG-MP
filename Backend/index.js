@@ -18,6 +18,19 @@ const pool = mysql.createPool({
 
 const app = express();
 
+function getMovelist(character){
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM ??;', [character], function (err, results, fields){
+            if (err){
+                console.log("query failed");
+                console.error(err);
+                return;
+            }
+            resolve(results);
+        })
+    })
+}
+
 function createMoveData(character, move){
     move = JSON.parse(move);
     move.moveID.replace(/\'/g, ""); 
@@ -115,6 +128,13 @@ function deleteMove(character, moveID){
         console.log(results);
     });
 }
+
+app.get("/movelist/:character", async (req, res) => {
+    const result = await getMovelist(req.params.character)
+    let movelist = {};
+    movelist = result;
+    res.send(movelist);
+});
 
 app.get("/createMove/:character/:data", (req, res) => {
     const move = JSON.parse(req.data);
