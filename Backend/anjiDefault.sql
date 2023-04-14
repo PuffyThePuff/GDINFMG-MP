@@ -3,7 +3,7 @@ use guilty_gear;
 DELETE FROM anji;
 
 INSERT INTO anji (moveID, notation, damage, guard, startup, active, recovery, on_block, invuln)
-VALUES
+VALUES(
 ROW ("5P", "5P", 26, "ALL", 6, "5", 9, -2, null),
 ROW ("5K", "5K", 30, "ALL", 8, "5", 9, -2, null),
 ROW ("c.S", "c.S", 42, "ALL", 7, "7", 11, +1, null),
@@ -32,4 +32,5 @@ ROW ("Issokutobi", "236H~K", null, null, null, null, 28, null, null),
 ROW ("Nagiha", "236H~S", 36, "Low", 15, "4", 20, -7, null),
 ROW ("Rin", "236H~H", 45, "High", 21, "2", 24, -9, null),
 ROW ("Issei Ougi: Sai", "632146H", 165, "ALL", 17, null, null, -30, null),
-ROW ("Kachoufuugetsu Kai", "632146S", 186, "ALL", 3, null, 40, null, "1-30 guard");
+ROW ("Kachoufuugetsu Kai", "632146S", 186, "ALL", 3, null, 40, null, "1-30 guard")
+);
