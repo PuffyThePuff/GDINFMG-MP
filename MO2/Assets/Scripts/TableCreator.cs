@@ -7,16 +7,16 @@ using TMPro;
 public class TableCreator : MonoBehaviour
 {
     [SerializeField] private Row rowPrefab;
-    [SerializeField] private bool useCoroutine;
-    [SerializeField] private bool useAsync;
+    [System.Serializable] private enum UseWhich { Coroutine, Async }
+    [SerializeField] private UseWhich use;
 
     private List<Row> rowList = new();
 
     public void StartCreateTable(int num)
     {
-        if(useAsync)
+        if(use == UseWhich.Async)
             CreateTable(num);
-        else if(useCoroutine)
+        else if(use == UseWhich.Coroutine)
             StartCoroutine(CreateTableCoroutine(num));
     }
 
