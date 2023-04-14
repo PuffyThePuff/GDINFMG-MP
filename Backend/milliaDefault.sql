@@ -33,5 +33,5 @@ ROW("Iron Savior", "214P", 43, "Low", 20, "Till corner", 27, -12, "10F onwards a
 ROW("Bad Moon", "j.236P", 36, "High", 11, "Until Landing", 32, -21, null),
 ROW("Mirazh", "214k", null, null, null, null, 28, null, "1-3F Upper Body 4-24F Above Knee"),
 ROW("Septem Voices", "236236S", 100, "ALL", 9, "Until Corner", 43, 8, "9-26F Airborne"),
-ROW("Winger", "632146H", 160, "ALL", 9, "10(9)15", 40, -32, "1-8F Full 7-40F Airborne"),
+ROW("Winger", "632146H", 160, "ALL", 9, "10(9)15", 40, -32, "1-8F Full 7-40F Airborne")
 );

@@ -64,5 +64,5 @@ ROW("Shizuriyuki (1)", "623H", 45, "ALL", 11, "3", 21, -7, "1-13F Upper Body"),
 ROW("Shizuriyuki (2)", "623HH", 55, "ALL", 10, "6", 29, -16, null),
 ROW("Bloodsucking Universe", "623P", 80, "Ground Throw", 7, "2", 48, null, "1~8F Throw"),
 ROW("Wasureyuki", "632146S", 181, "ALL", 9, "2", 54, -37, "1~10F Full"),
-ROW("Zansetsu", "632146H", 200, "ALL", 21, "6", 80, -66, "1~26F Full"),
+ROW("Zansetsu", "632146H", 200, "ALL", 21, "6", 80, -66, "1~26F Full")
 );
