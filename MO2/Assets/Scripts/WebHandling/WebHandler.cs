@@ -59,6 +59,7 @@ public class WebHandler : MonoBehaviour
         CreatePunishList();
     }
 
+    #region create move
     public void CreateMoveData(string characterName, string moveID, string notation, int damage, string guard, int startup, string active, int recovery, int on_block, string invuln)
     {
         StartCoroutine(createMoveDataRequest(characterName, moveID, notation, damage, guard, startup, active, recovery, on_block, invuln));
@@ -81,49 +82,7 @@ public class WebHandler : MonoBehaviour
         string requestString = JsonConvert.SerializeObject(moveData);
         byte[] requestData = Encoding.UTF8.GetBytes(requestString);
 
-        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "punish" + characterName + "/" + moveData))
-        {
-            //send what data type is in the request
-            request.SetRequestHeader("Content-Type", "application/JSON");
-            //add request data
-            request.uploadHandler = new UploadHandlerRaw(requestData);
-            //create reciever for response
-            request.downloadHandler = new DownloadHandlerBuffer();
-
-            yield return request.SendWebRequest();
-
-            Debug.Log($"response code: {request.responseCode}");
-
-            //check if no error
-            if (string.IsNullOrEmpty(request.error))
-            {
-                Debug.Log($"message: {request.downloadHandler.text}");
-            }
-            else
-            {
-                Debug.Log($"error: {request.error}");
-            }
-        }
-    }
-
-    #region create punish list
-    public void CreatePunishList()
-    {
-        StartCoroutine(CreatePunishListRequest("anji", 10));
-    }
-
-    // player's character and the frame data on block they want to punish
-    IEnumerator CreatePunishListRequest(string characterName, int moveOnBlock)
-    {
-        Dictionary<string, object> punishParams = new Dictionary<string, object>();
-
-        punishParams.Add("character", characterName);
-        punishParams.Add("on_block", moveOnBlock);
-
-        string requestString = JsonConvert.SerializeObject(punishParams);
-        byte[] requestData = Encoding.UTF8.GetBytes(requestString);
-
-        using (UnityWebRequest request = new UnityWebRequest(BaseURL + characterName + "/" + moveOnBlock))
+        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "createMove/" + characterName + "/" + moveData))
         {
             //send what data type is in the request
             request.SetRequestHeader("Content-Type", "application/JSON");
@@ -149,39 +108,24 @@ public class WebHandler : MonoBehaviour
     }
     #endregion
 
-    public void SearchMoveData()
+    #region create punish list
+    public void CreatePunishList()
     {
-
+        StartCoroutine(CreatePunishListRequest("anji", 10));
     }
 
-    public void SearchFastestMove(string characterName)
+    // player's character and the frame data on block they want to punish
+    IEnumerator CreatePunishListRequest(string characterName, int moveOnBlock)
     {
+        Dictionary<string, object> punishParams = new Dictionary<string, object>();
 
-    }
+        punishParams.Add("character", characterName);
+        punishParams.Add("on_block", moveOnBlock);
 
-    public void UpdateMoveData(string characterName, string moveName)
-    {
-
-    }
-
-    public void DeleteMoveData(string characterName, string moveName)
-    {
-
-    }
-
-    IEnumerator DeleteMoveDataRequest(string characterName, string moveName)
-    {
-        Dictionary<string, object> deleteScoresParams = new Dictionary<string, object>();
-
-        deleteScoresParams.Add("characterName", characterName);
-        deleteScoresParams.Add("moveID", moveName);
-
-        //turns the dictionary into a JSON string
-        string requestString = JsonConvert.SerializeObject(deleteScoresParams);
-        //convert string into bytes
+        string requestString = JsonConvert.SerializeObject(punishParams);
         byte[] requestData = Encoding.UTF8.GetBytes(requestString);
 
-        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "scores", "DELETE"))
+        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "punish/" + characterName + "/" + moveOnBlock))
         {
             //send what data type is in the request
             request.SetRequestHeader("Content-Type", "application/JSON");
@@ -205,29 +149,160 @@ public class WebHandler : MonoBehaviour
             }
         }
     }
+    #endregion
 
-    #region Group creation
-    public void CreateGroup()
+    #region get movelist
+    public void GetMovelist(string characterName)
     {
-        StartCoroutine(PostCreateGroupRequest());
+        StartCoroutine(getMovelistRequest(characterName));
     }
 
-    IEnumerator PostCreateGroupRequest()
+    IEnumerator getMovelistRequest(string characterName)
     {
-        Dictionary<string, string> groupParams = new Dictionary<string, string>();
+        Dictionary<string, object> punishParams = new Dictionary<string, object>();
 
-        groupParams.Add("group_num", groupNumber);
-        groupParams.Add("group_name", groupName);
-        groupParams.Add("game_name", gameName);
-        groupParams.Add("secret", secret);
+        punishParams.Add("character", characterName);
+
+        string requestString = JsonConvert.SerializeObject(punishParams);
+        byte[] requestData = Encoding.UTF8.GetBytes(requestString);
+
+        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "movelist/" + characterName))
+        {
+            //send what data type is in the request
+            request.SetRequestHeader("Content-Type", "application/JSON");
+            //add request data
+            request.uploadHandler = new UploadHandlerRaw(requestData);
+            //create reciever for response
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            yield return request.SendWebRequest();
+
+            Debug.Log($"response code: {request.responseCode}");
+
+            //check if no error
+            if (string.IsNullOrEmpty(request.error))
+            {
+                Debug.Log($"message: {request.downloadHandler.text}");
+
+                List<Dictionary<string, string>> moveList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(request.downloadHandler.text);
+            }
+            else
+            {
+                Debug.Log($"error: {request.error}");
+            }
+        }
+    }
+    #endregion
+
+    #region fastest move
+    public void SearchFastestMove(string characterName)
+    {
+        StartCoroutine(searchFastestMoveRequest(characterName));
+    }
+
+    IEnumerator searchFastestMoveRequest(string characterName)
+    {
+        Dictionary<string, object> punishParams = new Dictionary<string, object>();
+
+        punishParams.Add("character", characterName);
+
+        string requestString = JsonConvert.SerializeObject(punishParams);
+        byte[] requestData = Encoding.UTF8.GetBytes(requestString);
+
+        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "fastest/" + characterName))
+        {
+            //send what data type is in the request
+            request.SetRequestHeader("Content-Type", "application/JSON");
+            //add request data
+            request.uploadHandler = new UploadHandlerRaw(requestData);
+            //create reciever for response
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            yield return request.SendWebRequest();
+
+            Debug.Log($"response code: {request.responseCode}");
+
+            //check if no error
+            if (string.IsNullOrEmpty(request.error))
+            {
+                Debug.Log($"message: {request.downloadHandler.text}");
+            }
+            else
+            {
+                Debug.Log($"error: {request.error}");
+            }
+        }
+    }
+    #endregion
+
+    #region update move
+    public void UpdateMoveData(string characterName, string moveID, string notation, int damage, string guard, int startup, string active, int recovery, int on_block, string invuln)
+    {
+        StartCoroutine(updateMoveDataRequest(characterName, moveID, notation, damage, guard, startup, active, recovery, on_block, invuln));
+    }
+
+    IEnumerator updateMoveDataRequest(string characterName, string moveID, string notation, int damage, string guard, int startup, string active, int recovery, int on_block, string invuln)
+    {
+        Dictionary<string, object> moveData = new Dictionary<string, object>();
+
+        moveData.Add("moveID", moveID);
+        moveData.Add("notation", notation);
+        moveData.Add("damage", damage);
+        moveData.Add("guard", guard);
+        moveData.Add("startup", startup);
+        moveData.Add("active", active);
+        moveData.Add("recovery", recovery);
+        moveData.Add("on_block", on_block);
+        moveData.Add("invuln", invuln);
+
+        string requestString = JsonConvert.SerializeObject(moveData);
+        byte[] requestData = Encoding.UTF8.GetBytes(requestString);
+
+        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "update/" + characterName + "/" + moveData))
+        {
+            //send what data type is in the request
+            request.SetRequestHeader("Content-Type", "application/JSON");
+            //add request data
+            request.uploadHandler = new UploadHandlerRaw(requestData);
+            //create reciever for response
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            yield return request.SendWebRequest();
+
+            Debug.Log($"response code: {request.responseCode}");
+
+            //check if no error
+            if (string.IsNullOrEmpty(request.error))
+            {
+                Debug.Log($"message: {request.downloadHandler.text}");
+            }
+            else
+            {
+                Debug.Log($"error: {request.error}");
+            }
+        }
+    }
+    #endregion
+
+    #region delete move
+    public void DeleteMoveData(string characterName, string moveName)
+    {
+        StartCoroutine(DeleteMoveDataRequest(characterName, moveName));
+    }
+
+    IEnumerator DeleteMoveDataRequest(string characterName, string moveName)
+    {
+        Dictionary<string, object> deleteScoresParams = new Dictionary<string, object>();
+
+        deleteScoresParams.Add("characterName", characterName);
+        deleteScoresParams.Add("moveID", moveName);
 
         //turns the dictionary into a JSON string
-        string requestString = JsonConvert.SerializeObject(groupParams);
+        string requestString = JsonConvert.SerializeObject(deleteScoresParams);
         //convert string into bytes
         byte[] requestData = Encoding.UTF8.GetBytes(requestString);
 
-        //create POST request directed to /groups route
-        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "groups", "POST"))
+        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "delete/" + characterName + "/" + moveName))
         {
             //send what data type is in the request
             request.SetRequestHeader("Content-Type", "application/JSON");
@@ -283,100 +358,6 @@ public class WebHandler : MonoBehaviour
 
                     //LeaderboardManager.Singleton.AddToLeaderboard($"got player: {player["user_name"]} : {player["score"]}");
                 }
-            }
-            else
-            {
-                Debug.Log($"error: {request.error}");
-            }
-        }
-    }
-    #endregion
-
-    #region Send player score to group
-    public void SendPlayerScore(string userName, int score)
-    {
-        if (userName != "")
-        {
-            StartCoroutine(PostPlayerScoreRequest(userName, score));
-        }
-    }
-
-    IEnumerator PostPlayerScoreRequest(string name, int score)
-    {
-        Dictionary<string, object> playerScoreParams = new Dictionary<string, object>();
-
-        playerScoreParams.Add("group_num", 1);
-        playerScoreParams.Add("user_name", name);
-        playerScoreParams.Add("score", score);
-
-        //turns the dictionary into a JSON string
-        string requestString = JsonConvert.SerializeObject(playerScoreParams);
-        //convert string into bytes
-        byte[] requestData = Encoding.UTF8.GetBytes(requestString);
-
-        //create POST request directed to /groups route
-        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "scores", "POST"))
-        {
-            //send what data type is in the request
-            request.SetRequestHeader("Content-Type", "application/JSON");
-            //add request data
-            request.uploadHandler = new UploadHandlerRaw(requestData);
-            //create reciever for response
-            request.downloadHandler = new DownloadHandlerBuffer();
-
-            yield return request.SendWebRequest();
-
-            Debug.Log($"response code: {request.responseCode}");
-
-            //check if no error
-            if (string.IsNullOrEmpty(request.error))
-            {
-                Debug.Log($"message: {request.downloadHandler.text}");
-            }
-            else
-            {
-                Debug.Log($"error: {request.error}");
-            }
-        }
-    }
-    #endregion
-
-    #region Reset scores in group
-    public void ResetPlayerScores(string password)
-    {
-        StartCoroutine(DeletePlayerScoresRequest(password));
-    }
-
-    IEnumerator DeletePlayerScoresRequest(string password)
-    {
-        Dictionary<string, object> deleteScoresParams = new Dictionary<string, object>();
-
-        deleteScoresParams.Add("group_num", 1);
-        deleteScoresParams.Add("secret", password);
-
-        //turns the dictionary into a JSON string
-        string requestString = JsonConvert.SerializeObject(deleteScoresParams);
-        //convert string into bytes
-        byte[] requestData = Encoding.UTF8.GetBytes(requestString);
-
-        //create POST request directed to /groups route
-        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "scores", "DELETE"))
-        {
-            //send what data type is in the request
-            request.SetRequestHeader("Content-Type", "application/JSON");
-            //add request data
-            request.uploadHandler = new UploadHandlerRaw(requestData);
-            //create reciever for response
-            request.downloadHandler = new DownloadHandlerBuffer();
-
-            yield return request.SendWebRequest();
-
-            Debug.Log($"response code: {request.responseCode}");
-
-            //check if no error
-            if (string.IsNullOrEmpty(request.error))
-            {
-                Debug.Log($"message: {request.downloadHandler.text}");
             }
             else
             {
