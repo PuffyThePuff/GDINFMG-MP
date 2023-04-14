@@ -2092,7 +2092,7 @@ GameObject:
   - component: {fileID: 1986599631}
   - component: {fileID: 1986599634}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SearchBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2162,7 +2162,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1986599632}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2126779973}
+        m_TargetAssemblyTypeName: TableCreator, Assembly-CSharp
+        m_MethodName: StartCreateTable
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 10
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1986599632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2603,6 +2615,7 @@ GameObject:
   - component: {fileID: 2126779970}
   - component: {fileID: 2126779971}
   - component: {fileID: 2126779972}
+  - component: {fileID: 2126779973}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -2672,6 +2685,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &2126779973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126779969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591ed80b5d1e4a94393bc020748d4d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rowPrefab: {fileID: 2379100997831074348, guid: 74bdc14815576fc48a5e59bcb3e9816b, type: 3}
 --- !u!1 &2134221416
 GameObject:
   m_ObjectHideFlags: 0
@@ -3586,7 +3612,7 @@ MonoBehaviour:
   m_PreferredWidth: -1
   m_PreferredHeight: 50
   m_FlexibleWidth: 1
-  m_FlexibleHeight: -1
+  m_FlexibleHeight: 1
   m_LayoutPriority: 1
 --- !u!114 &4072454984855392358
 MonoBehaviour:
