@@ -16,104 +16,142 @@ const pool = mysql.createPool({
      connectTimeout: 5000    //ms
     });
 
-// const columns = ["name", "surfaceArea"];
-// pool.query("SELECT ?? FROM country LIMIT ?;", [columns, 5], function (err, results, fields){
-//     if (err){
-//         console.log("query failed");
-//         console.error(err);
-//         return;
-//     }
-//     console.log(results);
-// });
-
-// connection.end();
-
-// const example = require("./sampleModule.js");
-
-// console.log(example.myPerson);
-// example.myFunction();
-
 const app = express();
 
-// const tableName = ["characters", "moves"];
-// pool.query("SELECT * FROM characters;",  function (err, results, fields){
-//         if (err){
-//             console.log("query failed");
-//             console.error(err);
-//             return;
-//         }
-//         console.log(results);
-// });
+function createMoveData(character, move){
+    move = JSON.parse(move);
+    move.moveID.replace(/\'/g, ""); 
+    move.notation.replace(/\'/g, "");
+    move.guard.replace(/\'/g, "");
+    if (move.invuln){
+        move.invuln.replace(/\'/g, "");;
+    }
+    pool.query('INSERT INTO ?? (moveID, notation, damage, guard, startup, active, recovery, on_block, invuln) values ROW ("??", "??", ?, "??", ?, "??", ?, ?, "??")',
+    [character,
+        move.moveID, 
+        move.notation, 
+        move.damage, 
+        move.guard, 
+        move.startup, 
+        move.active, 
+        move.recovery, 
+        move.on_block, 
+        move.invuln],
+        function (err, results, fields){
+            if (err){
+                console.log("query failed");
+                console.error(err);
+                return;
+            }
+            console.log(results);
+        })
+}
 
-    
-// function InsertCharacterToDB(character){
-//     ///Works but has an extra `` on strings e.g `Ramlethal` instead of Ramlethal
-//     ///There could be a more efficient way
-//     pool.query('INSERT IGNORE INTO characters VALUES ("??");', 
-//     [///Character data
-//         character.name
-//     ],
-//         function (err, result) {
-//             if (err) throw err;
-//             console.log(character.name, " has been placed to the Database");
-//             console.log(character);
-//         }
-//     );
-// };
-        
-function InsertMovesToDB(move){
-    pool.query('INSERT IGNORE INTO moves VALUES("??", ?, "??", ?, "??", ?, ?, "??");', 
-    [///Move Data
-    move.moveID, 
-    move.notation, 
-    move.damage, 
-    move.guard, 
-    move.startup, 
-    move.active, 
-    move.recovery, 
-    move.on_block, 
-    move.invuln
-], 
-function (err, result) {
-    if (err) throw err;
-    console.log(move.moveID, " has been placed to the Database");
-    console.log(move);
-}  
-)};
+function sendPunishList(character, on_block){
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM ?? WHERE startup <= ?', [character, on_block], function (err, results, fields){
+            if (err){
+                console.log("query failed");
+                console.error(err);
+                return;
+            }
+            resolve(results);
+            console.log(results);
+        })
+    })
+};
 
-////Sample Data Adding
+function searchFastestMove(character){
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT moveID, startup FROM ?? WHERE startup = (SELECT MIN(startup) FROM ??);', [character, character], function (err, results, fields){
+            if (err){
+                console.log("query failed");
+                console.error(err);
+                return;
+            }
+            resolve(results);
+            console.log(results);
+        })
+    })
+}
 
+function updateMove(character, move){
+    move = JSON.parse(move);
+    move.moveID.replace(/\'/g, ""); 
+    move.notation.replace(/\'/g, "");
+    move.guard.replace(/\'/g, "");
+    if (move.invuln){
+        move.invuln.replace(/\'/g, "");;
+    }
+    pool.query('UPDATE ?? SET notation = ??, damage = ?, guard = ??, startup = ?, active = ??, recovery = ?, on_block = ?, invuln = ?? WHERE moveID = ??;'),
+    [character, 
+        move.notation, 
+        move.damage, 
+        move.guard, 
+        move.startup, 
+        move.active, 
+        move.recovery, 
+        move.on_block, 
+        move.invuln,
+        move.moveID],
+        function (err, results, fields){
+            if (err){
+                console.log("query failed");
+                console.error(err);
+                return;
+            }
+            console.log(results);
+        }
+}
 
-///Sample Move Data, is not actual data from game
-    // movesData.moveID = '5P';
-    // movesData.notation = '5P';
-    // movesData.damage = 10;
-    // movesData.guard = 'All';
-    // movesData.startup = 10;
-    // movesData.active =  3;
-    // movesData.recovery = 3;
-    // movesData.on_block =  0;
-    // movesData.invuln = null;
-    // InsertMovesToDB(movesData);
-
-function sendPunishList(character, startup){
-    pool.query('SELECT moveId, notation FROM ?? WHERE startup <= ?', [character, startup], function (err, results, fields){
+function deleteMove(character, moveID){
+    pool.query("DELETE FROM ?? WHERE moveID = ??;", [character, moveID], function (err, results, fields){
         if (err){
             console.log("query failed");
             console.error(err);
             return;
         }
+        resolve(results);
         console.log(results);
-        return results;
-    })
-};
+    });
+}
 
-// sendPunishList('anji', 10);
-
-app.get("/punish", (req, res) => {
-    res.send(sendPunishList(req.params.character, req.params.startup));
+app.get("/createMove/:character/:data", (req, res) => {
+    const move = JSON.parse(req.data);
+    createMoveData(req.character, move);
+    res.send("Move ?? created for ??", [move.moveID, req.character]);
 });
+
+app.get("/punish/:character/:id", async (req, res) => {
+    const result = await sendPunishList(req.params.character, req.params.id)
+    let punishList = {};
+    punishList = result;
+    console.log(punishList)
+    res.send(punishList);
+});
+
+app.get("/fastest/:character", async (req, res) => {
+    const result = await searchFastestMove(req.params.character);
+    let fastest = {};
+    fastest = result;
+    console.log(fastest);
+    res.send(fastest);
+})
+
+app.get("/update/:character/:id", async (req, res) => {
+    const move = JSON.parse(req.params.move);
+    updateMove(req.character, move);
+    res.send("Move ?? update for ??", [move.moveID, req.character]);    
+})
+
+app.get("/delete/:character/:id", async (req, res) => {
+    deleteMove(req.character, req.id);
+    res.send("Move ?? deleted for ??", [req.id, req.character]);
+})
 
 app.listen(process.env.PORT, function(){
     console.log("Server now listening");
 });
+
+//sendPunishList('anji', 10);
+//createMoveData("anji", '{ "moveID": "6D", "notation": "6D", "damage": 31, "guard": "Low", "startup": 10, "active": "3", "recovery": 22, "on_block": -11, "invuln": null }');
