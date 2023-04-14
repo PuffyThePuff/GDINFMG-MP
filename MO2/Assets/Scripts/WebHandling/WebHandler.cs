@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using System.Text;
+using TMPro;
 
 //TODO
 //present data received from GetPlayerScoresRequest() in the game scene
@@ -19,6 +20,8 @@ public class WebHandler : MonoBehaviour
     [SerializeField] private string groupName = "Group 1";
     [SerializeField] private string gameName = "Handy Manny";
     [SerializeField] private string secret = "supersecretpassword";
+
+    [SerializeField] private TMP_InputField input;
 
     #region singleton code
     //Miguel's really cool singleton code he made in 2020 and probably still works
@@ -56,6 +59,11 @@ public class WebHandler : MonoBehaviour
         //GetPlayerScores();
         //SendPlayerScore("BOBBERT", 9999);
         //ResetPlayerScores(secret);
+    }
+
+    private void Update()
+    {
+        Debug.Log(input.textComponent.text);
     }
 
     public void CreateMoveData()
