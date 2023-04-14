@@ -17,10 +17,10 @@ public class TableCreator : MonoBehaviour
     {
         if (isRunning) return;
 
-        if (use == UseWhich.Coroutine)
+        //if (use == UseWhich.Coroutine)
             StartCoroutine(CreateTableCoroutine(num));
-        else if (use == UseWhich.Async)
-            CreateTableAsync(num);
+        //else if (use == UseWhich.Async)
+            //CreateTableAsync(num);
             
     }
 
