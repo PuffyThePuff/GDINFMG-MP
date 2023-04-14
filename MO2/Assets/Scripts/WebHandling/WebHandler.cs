@@ -63,7 +63,7 @@ public class WebHandler : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(input.textComponent.text);
+        //Debug.Log(input.textComponent.text);
     }
 
     public void CreateMoveData()

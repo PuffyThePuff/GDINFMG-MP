@@ -31,7 +31,7 @@ public class TableCreator : MonoBehaviour
         for(int i = 0; i < count; i++)
         {
             Row row = rowList[i];
-            Debug.Log($"Destroying {row.name}");
+            //Debug.Log($"Destroying {row.name}");
             Destroy(row.gameObject);
             yield return null;
         }
@@ -42,7 +42,7 @@ public class TableCreator : MonoBehaviour
         {
             var row = Instantiate(rowPrefab, m_Transform);
             rowList.Add(row);
-            Debug.Log($"Creating {row.name}");
+            //Debug.Log($"Creating {row.name}");
             //row.GetComponentInChildren<TextMeshProUGUI>().SetText("uwu");
             //Set text
             int length = row.RowLength;
