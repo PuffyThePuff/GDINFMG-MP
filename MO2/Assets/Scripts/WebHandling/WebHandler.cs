@@ -15,11 +15,6 @@ public class WebHandler : MonoBehaviour
     //public readonly string BaseURL = "https://gdapdev-web-api.herokuapp.com/api/";
     public readonly string BaseURL = "localhost:3000/";
 
-    [SerializeField] private string groupNumber = "0";
-    [SerializeField] private string groupName = "Group 1";
-    [SerializeField] private string gameName = "Handy Manny";
-    [SerializeField] private string secret = "supersecretpassword";
-
     #region singleton code
     //Miguel's really cool singleton code he made in 2020 and probably still works
     //put Singleton = this in Awake()
@@ -52,11 +47,7 @@ public class WebHandler : MonoBehaviour
 
     private void Start()
     {
-        //CreateGroup();
-        //GetPlayerScores();
-        //SendPlayerScore("BOBBERT", 9999);
-        //ResetPlayerScores(secret);
-        CreatePunishList();
+
     }
 
     #region create move
@@ -109,9 +100,9 @@ public class WebHandler : MonoBehaviour
     #endregion
 
     #region create punish list
-    public void CreatePunishList()
+    public void CreatePunishList(string characterName, int startup)
     {
-        StartCoroutine(CreatePunishListRequest("anji", 10));
+        StartCoroutine(CreatePunishListRequest(characterName, startup));
     }
 
     // player's character and the frame data on block they want to punish
@@ -319,45 +310,6 @@ public class WebHandler : MonoBehaviour
             if (string.IsNullOrEmpty(request.error))
             {
                 Debug.Log($"message: {request.downloadHandler.text}");
-            }
-            else
-            {
-                Debug.Log($"error: {request.error}");
-            }
-        }
-    }
-    #endregion
-
-    #region Get player scores in group
-    public void GetPlayerScores()
-    {
-        StartCoroutine(GetPlayerScoresRequest());
-    }
-
-    IEnumerator GetPlayerScoresRequest()
-    {
-        using (UnityWebRequest request = new UnityWebRequest(BaseURL + "groups/" + groupNumber, "GET"))
-        {
-            request.downloadHandler = new DownloadHandlerBuffer();
-
-            yield return request.SendWebRequest();
-
-            Debug.Log($"response code: {request.responseCode}");
-
-            //check if no error
-            if (string.IsNullOrEmpty(request.error))
-            {
-                Debug.Log($"message: {request.downloadHandler.text}");
-
-                List<Dictionary<string, string>> scoreList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(request.downloadHandler.text);
-
-                //for testing TODO: present this data on the game scene
-                foreach(Dictionary<string, string> player in scoreList)
-                {
-                    Debug.Log($"got player: {player["user_name"]} : {player["score"]}");
-
-                    //LeaderboardManager.Singleton.AddToLeaderboard($"got player: {player["user_name"]} : {player["score"]}");
-                }
             }
             else
             {
