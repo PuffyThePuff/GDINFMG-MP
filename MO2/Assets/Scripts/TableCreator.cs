@@ -8,7 +8,7 @@ public class TableCreator : MonoBehaviour
 {
     [SerializeField] private Row rowPrefab;
     [System.Serializable] private enum UseWhich { Coroutine, Async }
-    [SerializeField] private UseWhich use;
+    //[SerializeField] private UseWhich use;
 
     private List<Row> rowList = new();
     private bool isRunning = false;
