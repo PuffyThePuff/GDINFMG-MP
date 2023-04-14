@@ -18,8 +18,7 @@ ROW ("j.K", "j.K", 22, "High", 7, "4", 13, null, null),
 ROW ("j.S", "j.S", 30, "High", 12, "4", 24, null, null),
 ROW ("j.H", "j.H", 40, "High", 19, "6", 31, null, null),
 ROW ("j.D", "j.D", 48, "High", 10, "2,2,2", null, null, null),
-ROW ("6P", "6P", 30, "ALL", 9, "5", 18, -9, "1-3 Upper Body
-4-13 Above Knees"),
+ROW ("6P", "6P", 30, "ALL", 9, "5", 18, -9, "1-3 Upper Body 4-13 Above Knees"),
 ROW ("6H", "6H", 50, "ALL", 18, "2", 33 -16, null),
 ROW ("2D", "2D", 36, "Low", 10, "6", 19, -8, null),
 ROW ("5D", "5D", 45, "High", 20, "2", 27, -15, null),
@@ -35,5 +34,5 @@ ROW("Erarlumo (2)", "214P 214P", 25, "ALL", 9, "4", 25, -12, null),
 ROW("Erarlumo (3)", "214P 214P 214P", 30, "ALL", 11, "6", 38, -25, null),
 ROW("Agressa Ordono", "j.214S", 60, "ALL", 12, "4(10)4", 24, null, null),
 ROW("Calvados", "632146H", 156, "ALL (Guard Crush)", 24, null, null, 16, null),
-ROW("Mortobato", "236236S", 160, "ALL", 9, "6", 51, -38, null),
+ROW("Mortobato", "236236S", 160, "ALL", 9, "6", 51, -38, null)
 );

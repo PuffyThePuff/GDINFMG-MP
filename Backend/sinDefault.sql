@@ -18,8 +18,7 @@ ROW ("j.K", "j.K", 26, "High", 7, "3", 15, null, null),
 ROW ("j.S", "j.S", 33, "High", 9, "4", 21, null, null),
 ROW ("j.H", "j.H", 44, "High", 11, "4", 26, null, null),
 ROW ("j.D", "j.D", 41, "High", 28, "Until Landing", 16, -3, null),
-ROW ("6P", "6P", 34, "ALL", 11, "6", 20, -12, "1~3F Upper Body
-4~16F Above Knee"),
+ROW ("6P", "6P", 34, "ALL", 11, "6", 20, -12, "1~3F Upper Body 4~16F Above Knee"),
 ROW ("6K", "6K", 36, "Low", 21, "4", 10, 3, null),
 ROW ("6H", "6H", 48, "ALL", 15, "4", 17 -4, null),
 ROW ("2D", "2D", 33, "Low", 10, "6", 15, -7, "5~24F Low Profile"),
@@ -38,5 +37,5 @@ ROW ("Still Growing", "63214P", null, null, null, null, 49, null, null),
 ROW ("R.T.L", "632146H", 120, "ALL", 16, "12", 57, -55, "1~18 All"),
 ROW ("R.T.L Follow-up", "632146HH", 100, "ALL", 12, "8", 54, -43, null),
 ROW ("Tyrant Barrel", "236236P", 50, "ALL", 10, "3", 38, -22, null),
-ROW ("Tyrant Barrel Follow-up", "236236P~]P[", 50, "ALL (Guard Crush)", 3, "3", 39, -12, null),
+ROW ("Tyrant Barrel Follow-up", "236236P~]P[", 50, "ALL (Guard Crush)", 3, "3", 39, -12, null)
 );
